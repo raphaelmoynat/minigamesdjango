@@ -1,0 +1,31 @@
+{% extends 'website/index.html' %}
+
+{% block body %}
+<div class="container mt-5">
+        <h1 class="text-center">Cemantox</h1>
+        <form method="post" action="{% url 'play_cemantox' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="word">Entrez un mot :</label>
+                <input type="text" class="form-control" name="word" id="word">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-3">Deviner</button>
+        </form>
+
+        <h3 class="mt-4">Mots devinés :</h3>
+        <ul class="list-group">
+            {% for guess in guessed_words %}
+                <li class="list-group-item">
+                    {{ guess.word }} : {{ guess.similarity }}%
+                    {% if guess.similarity == 100.0 %}
+                    <div class="text-succes f-5">Bravo tu as trouvé le mot</div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'reset_cemantox' %}" class="btn btn-secondary mt-4">Relancer</a>
+    </div>
+
+
+
+{% endblock %}

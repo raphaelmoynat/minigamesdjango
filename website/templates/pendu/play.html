@@ -1,0 +1,48 @@
+{% extends 'website/index.html' %}
+
+{% block body %}
+
+    <div class="container text-center mt-5">
+        <h1 class="mb-4">Jeu du Pendu</h1>
+
+        <div class="mb-4 fs-4">
+            Mot à deviner : {{ new_word }}
+        </div>
+
+        <div class="mb-4">
+            Essais restants : <span class="font-weight-bold">{{ tries }}</span>
+        </div>
+
+
+        {% if not message %}
+        <form action="{% url 'play_pendu' %}" method="POST" class="form-inline d-flex flex-column justify-content-center align-items-center mb-5">
+             {% csrf_token %}
+            <div class="form-group mb-4 col-4">
+                <label class="mb-3">Entrer une lettre : </label>
+                <input type="text" name="letter" maxlength="1" required class="form-control" placeholder="lettre">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Essayer</button>
+        </form>
+        {% endif %}
+
+        {% if guessed_letters %}
+        <div class="my-4">
+            <p>Lettres trouvées :
+                <span class="text-success">{{ guessed_letters|join:", " }}</span>
+            </p>
+        </div>
+        {% endif %}
+
+        {% if message %}
+            <div class="text-succes">{{ message }}</div>
+
+        {% endif %}
+
+        <div class="d-flex justify-content-center mt-5">
+            <a href="{% url 'reset_pendu' %}" class="btn btn-primary">Rejouer</a>
+        </div>
+
+
+    </div>
+
+{% endblock %}

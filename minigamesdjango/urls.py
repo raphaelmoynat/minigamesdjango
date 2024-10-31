@@ -26,6 +26,9 @@ urlpatterns = [
     path("start_cemantox/", views.start_cemantox, name="start_cemantox"),
     path("play_cemantox/", views.play_cemantox, name="play_cemantox"),
     path("reset_cemantox/", views.reset_cemantox, name="reset_cemantox"),
+    path("start_pendu/", views.start_pendu, name="start_pendu"),
+    path("play_pendu/", views.play_pendu, name="play_pendu"),
+    path("reset_pendu/", views.reset_pendu, name="reset_pendu"),
 
 
 ]

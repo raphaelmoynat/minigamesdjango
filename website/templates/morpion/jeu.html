@@ -1,0 +1,53 @@
+{% extends 'website/index.html' %}
+
+
+
+{% block body %}
+
+<style>
+        .case {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #000;
+            font-size: 2rem;
+            height: 100px;
+            width: 100px;
+            cursor: pointer;
+        }
+ </style>
+
+<div class="container">
+    <h1 class="text-center my-4">Jeu de Morpion</h1>
+    {% for row in board_rows %}
+        <div class="row justify-content-center">
+            {% for case in row %}
+                <div class="col-4 case">
+                    {% if case.value == '' %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" name="case_index" value="{{ case.index }}">
+                                {{ case.value }}
+                            </button>
+                        </form>
+                    {% else %}
+                        {{ case.value }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+
+
+<form method="post" action="{% url 'reset_morpion' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-warning">Réinitialiser la partie</button>
+</form>
+
+
+
+
+
+{% endblock %}

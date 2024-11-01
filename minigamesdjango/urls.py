@@ -29,6 +29,7 @@ urlpatterns = [
     path("start_pendu/", views.start_pendu, name="start_pendu"),
     path("play_pendu/", views.play_pendu, name="play_pendu"),
     path("reset_pendu/", views.reset_pendu, name="reset_pendu"),
-
-
+    path('start_morpion/', views.start_morpion, name='start_morpion'),
+    path('play_morpion', views.play_morpion, name='play_morpion'),
+    path("reset_morpion/", views.reset_morpion, name='reset_morpion'),
 ]

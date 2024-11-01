@@ -4,10 +4,10 @@ from django.http import HttpResponse
 
 llm = spacy.load("en_core_web_lg")
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from website.forms import WordForm
-from website.models import Word
+from website.models import Word, MorpionJeu
 
 
 # Create your views here.
@@ -113,9 +113,54 @@ def reset_pendu(request):
     request.session.pop("message", None)
     return redirect("start_pendu")
 
+def start_morpion(request):
+    request.session['board'] = [''] * 9
+    request.session['player'] = 'X'
+    return redirect("play_morpion")
 
 
 
+def play_morpion(request):
+    board = request.session['board']
+    player = request.session['player']
+
+    if request.method == 'POST':
+        case_index = int(request.POST.get('case_index'))
+
+        if board[case_index] == '':
+            board[case_index] = player
+            if player == "X":
+                request.session['player'] = "O"
+            else:
+                request.session['player'] = "X"
+            request.session['board'] = board
+            return redirect('play_morpion')
+
+
+    board_with_indices = []
+
+
+    for i in range(9):
+        board_with_indices.append({'index': i, 'value': board[i]})
+
+    board_rows = []
+
+
+    board_rows.append(board_with_indices[0:3])
+    board_rows.append(board_with_indices[3:6])
+    board_rows.append(board_with_indices[6:9])
+
+    return render(request, 'morpion/jeu.html', {
+        'board_rows': board_rows,
+        'player': player,
+    })
+
+
+
+def reset_morpion(request):
+    request.session['board'] = [''] * 9
+    request.session['player'] = 'X'
+    return redirect('start_morpion')
 
 
 

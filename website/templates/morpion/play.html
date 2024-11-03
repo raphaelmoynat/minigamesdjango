@@ -19,6 +19,13 @@
 
 <div class="container">
     <h1 class="text-center my-4">Jeu de Morpion</h1>
+    {% if winner %}
+    <div class="d-flex justify-content-center">
+        <div class="alert alert-success text-center col-4">
+            Le joueur {{ winner }} a gagné !
+        </div>
+    </div>
+    {% endif %}
     {% for row in board_rows %}
         <div class="row justify-content-center">
             {% for case in row %}

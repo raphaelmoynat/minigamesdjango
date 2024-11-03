@@ -116,6 +116,7 @@ def reset_pendu(request):
 def start_morpion(request):
     request.session['board'] = [''] * 9
     request.session['player'] = 'X'
+    request.session['winner'] = None
     return redirect("play_morpion")
 
 
@@ -123,12 +124,16 @@ def start_morpion(request):
 def play_morpion(request):
     board = request.session['board']
     player = request.session['player']
+    winner = request.session['winner']
 
     if request.method == 'POST':
         case_index = int(request.POST.get('case_index'))
 
         if board[case_index] == '':
             board[case_index] = player
+            if check_winner(board, player):
+                winner = player
+                request.session['winner'] = winner
             if player == "X":
                 request.session['player'] = "O"
             else:
@@ -150,16 +155,32 @@ def play_morpion(request):
     board_rows.append(board_with_indices[3:6])
     board_rows.append(board_with_indices[6:9])
 
-    return render(request, 'morpion/jeu.html', {
+    return render(request, 'morpion/play.html', {
         'board_rows': board_rows,
         'player': player,
+        'winner': winner
     })
+
+
+def check_winner(board, player):
+
+    if (board[0] == board[1] == board[2] == player) or (board[3] == board[4] == board[5] == player) or (board[6] == board[7] == board[8] == player):
+        return True
+
+    if (board[0] == board[3] == board[6] == player) or (board[1] == board[4] == board[7] == player) or (board[2] == board[5] == board[8] == player):
+        return True
+
+    if (board[0] == board[4] == board[8] == player) or (board[2] == board[4] == board[6] == player):
+        return True
+
+    return False
 
 
 
 def reset_morpion(request):
     request.session['board'] = [''] * 9
     request.session['player'] = 'X'
+    request.session['winner'] = None
     return redirect('start_morpion')
 
 

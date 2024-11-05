@@ -6,12 +6,13 @@
         <div class="mb-1">
             <br>
             <div class="fs-5">{{ word.text }}</div>
+            <a href="{% url 'delete_word' word.id %}" class="btn btn-danger">Supprimer</a>
 
         </div>
         {% endfor %}
         <div class="card mt-5">
             <div class="card-header">
-                <h2>Ajouter un mot en anglais</h2>
+                <h2>Add a word</h2>
             </div>
             <div class="card-body">
                 <form method="post" class="p-4">

@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path("add_word/", views.add_word, name="add_word"),
+    path("delete_word/<int:word_id>/", views.delete_word, name="delete_word"),
     path("start_cemantox/", views.start_cemantox, name="start_cemantox"),
     path("play_cemantox/", views.play_cemantox, name="play_cemantox"),
     path("reset_cemantox/", views.reset_cemantox, name="reset_cemantox"),

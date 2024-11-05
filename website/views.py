@@ -27,6 +27,12 @@ def add_word(request):
 
     return render(request, "cemantox/add_word.html", {"form": form, "words": words})
 
+def delete_word(request, word_id):
+    word = get_object_or_404(Word, id=word_id)
+    word.delete()
+    return redirect('add_word')
+
+
 
 def start_cemantox(request):
     secret_word = Word.objects.all()[random.randint(0, Word.objects.count() -1)].text

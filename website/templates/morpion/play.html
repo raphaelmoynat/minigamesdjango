@@ -15,7 +15,7 @@
             width: 100px;
             cursor: pointer;
         }
- </style>
+</style>
 
 <div class="container">
     <h1 class="text-center my-4">Jeu de Morpion</h1>
@@ -44,14 +44,18 @@
             {% endfor %}
         </div>
     {% endfor %}
+
+
+
+    <div class="d-flex justify-content-center mt-5">
+         <a href="{% url 'reset_morpion' %}" class="btn btn-warning">Réinitialiser la partie</a>
+    </div>
+
 </div>
 
 
 
-<form method="post" action="{% url 'reset_morpion' %}">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-warning">Réinitialiser la partie</button>
-</form>
+
 
 
 

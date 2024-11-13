@@ -12,7 +12,7 @@ from website.models import Word, MorpionJeu
 
 # Create your views here.
 def index(request):
-    return render(request, 'website/index.html')
+    return render(request, 'website/home.html')
 
 def add_word(request):
     words = Word.objects.all()
@@ -35,7 +35,10 @@ def delete_word(request, word_id):
 
 
 def start_cemantox(request):
-    secret_word = Word.objects.all()[random.randint(0, Word.objects.count() -1)].text
+    if Word.objects.count() == 0:
+        secret_word = "appendicite"
+    else:
+        secret_word = Word.objects.all()[random.randint(0, Word.objects.count() -1)].text
     request.session['secret_word'] = secret_word
     request.session['guessed_words'] = []
     return redirect("play_cemantox")
@@ -64,7 +67,10 @@ def reset_cemantox(request):
 
 
 def start_pendu(request):
-    secret_word = Word.objects.all()[random.randint(0, Word.objects.count() -1)].text
+    if Word.objects.count() == 0:
+        secret_word = "appendicite"
+    else:
+        secret_word = Word.objects.all()[random.randint(0, Word.objects.count() - 1)].text
     request.session['guessed_letters'] = []
     request.session['secret_word'] = secret_word
     request.session['tries'] = 10
